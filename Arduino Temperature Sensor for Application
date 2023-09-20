@@ -1,0 +1,26 @@
+#include <math.h> //Include Math Library
+ 
+int mySensor = 20; // A1 Analog where the temperature sensor will used
+ 
+double Thermistor(int RawADC) {
+  double TEMP;
+  TEMP = log(10000.0*((1024.0/RawADC-1))); 
+  TEMP = 1 / (0.001129148 + (0.000234125 + (0.0000000876741 * TEMP * TEMP ))* TEMP );
+  TEMP = TEMP - 273.15;            // To Convert Kelvin to Celcius
+   //TEMP = (TEMP * 9.0)/ 5.0 + 32.0; // To Convert Celcius to Fahrenheit
+   return TEMP;
+}
+ 
+void setup() {
+ Serial.begin(9600);
+}
+ 
+void loop() {
+ int readVal=analogRead(mySensor);
+ double Temp =  Thermistor(readVal);
+ 
+ Serial.println(Temp);  // Display the temperature
+ //Serial.println(readVal);  // Display the temperature
+ 
+ delay(1000);
+}
