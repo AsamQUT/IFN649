@@ -22,12 +22,13 @@ void setup() {
 
 }
 
-void  loop ()
+void  loop (){
+  if(Serial1.available() > 0){
+    digitalWrite(LED, HIGH);
 {
   int rawValue = analogRead (sensorPin);
   if(rawValue > Threshold) 
   {
-    digitalWrite(LED, HIGH);
     float reads[samp_siz], sum;
     long int now, ptr;
     float  last, reader, start;
@@ -89,13 +90,18 @@ void  loop ()
           Serial.print(print_value);
           Serial.print('\n');
           delay(100);
-          
+
+          Serial1.print("BPM: ♥ ");
+          Serial1.print(print_value);
+          Serial1.print('\n');
+          delay(100);         
           third = second;
           second  = first;
           rawValue = analogRead (sensorPin);
 
             if(rawValue < Threshold) {
               Serial.println("Please place fingertip on sensor!");
+              Serial1.println("Please place fingertip on sensor!");
               digitalWrite(LED, LOW);
               break;}
         }
@@ -114,4 +120,5 @@ void  loop ()
     }
   }
 }
-
+}
+}
