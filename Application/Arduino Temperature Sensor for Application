@@ -29,6 +29,7 @@ void loop() {
  
  Serial.println(Temp);  // Display the temperature
  //Serial.println(readVal);  // Display the temperature
+ Serial1.println(Temp);
  
  delay(1000);
 }
