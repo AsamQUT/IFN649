@@ -11,17 +11,14 @@ void setup(){
 //as the name says - it goes on a loop 
 void loop() {
 //receive data from RP via bluetooth, save and print the data on the terminal
-if(Serial1.available() > 0){
+while(Serial1.available() > 0){
 String str = Serial1.readString().substring(0); //substring 0 because you read the FIRST character 
 
 //turn the pin on or off depending on the data received via bluetooth as above
 Serial.println(str);
-if(str == "OK"){
-tone(buzzer, 1000,250); //beep at 1000 freq for 250ms
-delay(500); //stop beeping for 500 ms
-tone(buzzer, 1000,250);
-Serial.println("CAUTION");
+if(str == "CAUTION"){
+tone(buzzer, 1000,1000); //beep at 1000 freq for 250ms
+delay(500);
+}
 } 
-}
-}
-}
+} 
