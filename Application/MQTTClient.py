@@ -1,4 +1,7 @@
-from paho.mqtt import client
+import paho.mqtt.client as mqtt
+import paho.mqtt.publish as publish 
+import serial 
+
 
 print("Starting my application...")
 
@@ -6,27 +9,42 @@ broker = "localhost" #in the view of the program running on EC2, the MQTT broker
 port = 1883
 
 def on_connect(client, userdata, flags, rc):
-    if rc == 0:
-        print("Connected to MQTT Broker!")
-    else:
-        print("Failed to connect, return code %d\n", rc)
+    subscribe_topic1 = "PETHR"
+    subscribe_topic2 = "PETTEMP"
+    publish_topic = "PETBUZZER"
+    print(f"Connected to MQTT Server: {broker} at port {port}")
+    client.subscribe(subscribe_topic1)
+    client.subscribe(subscribe_topic2)
+    client.publish(publish_topic)
+    print(f"Subscribed to topics: {subscribe_topic1}, {subscribe_topic2}")
 
 
 def on_message(client, userdata, msg):
-    data = msg.payload.decode() #decode received bytes to a string.
-    if process_data(data):
-        mqtt_client.publish("PETBUZZER", "CAUTION") #downstream sub to PETBUZZER
-    print(f"Received" '{data}' from '{msg.topic}' topic")
-    processed_data = data + "processed" #publish processed data to data_out
-    print(f"Processed data published: '{processed_data}'")
+    payload = str(msg.payload.decode("utf-8"))
+    TEMP_data = 25
+    HR_DATA = 50
+    if msg.topic == "PETTEMP":
+        TEMP_data = (payload)
+        print(msg.topic + "\nTEMP:" +str(msg.payload.decode("utf-8")))
+    elif msg.topic == "PETHR":
+        HR_DATA = (payload)
+        print(msg.topic + "\nBPM:" +str(msg.payload.decode("utf-8")))
+    
+        data1 = int(TEMP_data) 
+        data2 = int(HR_DATA)
+        if (data1 >= 25 and data2 >= 100) or data2 >140:
+            publish.single("PETBUZZER", "CAUTION") #downstream sub to PETBUZZER
+            print(f"Warning published")
+    
 
-def process_data(self, data):
-    data_converted = int(data)
-    if data_converted > 25:
-        return True
-    else 
-        return False
 
-mqtt_client = client.Client("my_client")
-mqtt_client.on_connect = on_connect
-mqtt_client.on_message = on_message
+
+        
+client = mqtt.Client()
+client.on_connect = on_connect
+client.on_message = on_message
+client.connect(broker,port, 60)
+client.loop_forever()
+
+
+
