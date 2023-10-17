@@ -25,10 +25,12 @@ void setup() {
  
 void loop() {
  int readVal=analogRead(mySensor);
- double Temp =  Thermistor(readVal);
+ int Temp =  Thermistor(readVal);
  
+
  Serial.println(Temp);  // Display the temperature
  //Serial.println(readVal);  // Display the temperature
+
  Serial1.println(Temp);
  
  delay(1000);
