@@ -16,14 +16,14 @@ while True:
 	if ser1.in_waiting > 0:
 		rawserial1 = ser1.readline()
 		cookedserial1 = rawserial1.decode('utf-8').strip('\r\n')
-		publish.single("PETHR", (cookedserial1), hostname="13.239.112.115")
+		publish.single("PETHR", (cookedserial1), hostname="13.239.112.115") #publish data value to topic
 
 		
 	if ser2.in_waiting > 0:
 		rawserial2 = ser2.readline()
 		cookedserial2 = rawserial2.decode('utf-8').strip('\r\n')
-		publish.single("PETTEMP", (cookedserial2), hostname="13.239.112.115")
-	time.sleep(1.5)	
+		publish.single("PETTEMP", (cookedserial2), hostname="13.239.112.115") #publish data value to topic
+	time.sleep(1.5)	#wait for 1.5s 
 	
 
 
