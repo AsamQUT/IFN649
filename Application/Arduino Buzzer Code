@@ -14,7 +14,7 @@ void loop() {
 while(Serial1.available() > 0){
 String str = Serial1.readString().substring(0); //substring 0 because you read the FIRST character 
 
-//turn the pin on or off depending on the data received via bluetooth as above
+//turn the pin on depending on the data received via bluetooth as above
 Serial.println(str);
 if(str == "CAUTION"){
 tone(buzzer, 1000,1000); //beep at 1000 freq for 250ms
