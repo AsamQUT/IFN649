@@ -1,7 +1,6 @@
 import serial
 import time
 import string
-import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 
 #reading and writing_data from and to arduino serially.
@@ -27,5 +26,3 @@ while True:
 	
 
 
-client = mqtt.Client()
-client.loop_forever()
