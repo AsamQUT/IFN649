@@ -28,5 +28,4 @@ while True:
 
 
 client = mqtt.Client()
-client.connect(ADD, PORT, 60)
 client.loop_forever()
