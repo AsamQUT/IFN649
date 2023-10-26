@@ -27,10 +27,6 @@ while True:
 	
 
 
-
-ADD = "13.239.112.115"
-PORT = 1883
-
 client = mqtt.Client()
 client.connect(ADD, PORT, 60)
 client.loop_forever()
